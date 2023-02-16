@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package gateway.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "nacostest/api/gateway/v1;v1";
+
+service Auth {
+  rpc Login (LoginRequest) returns (LoginReply) {
+    option (google.api.http) = {
+      post: "/auth/login",
+      body: "*"
+    };
+  }
+}
+
+message LoginRequest {
+  string id = 1;
+}
+
+message LoginReply {
+  string token = 1;
+}

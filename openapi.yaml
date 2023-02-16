@@ -1,0 +1,72 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ""
+    version: 0.0.1
+paths:
+    /auth/login:
+        post:
+            tags:
+                - Auth
+            operationId: Auth_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/gateway.v1.LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/gateway.v1.LoginReply'
+    /user/find:
+        post:
+            tags:
+                - User
+            description: Sends a greeting
+            operationId: User_Find
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/gateway.v1.FindRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/gateway.v1.FindReply'
+components:
+    schemas:
+        gateway.v1.FindReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+        gateway.v1.FindRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+        gateway.v1.LoginReply:
+            type: object
+            properties:
+                token:
+                    type: string
+        gateway.v1.LoginRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+tags:
+    - name: Auth
+    - name: User

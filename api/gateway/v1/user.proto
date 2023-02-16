@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package gateway.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "nacostest/api/gateway/v1;v1";
+
+service User {
+  // Sends a greeting
+  rpc Find (FindRequest) returns (FindReply) {
+    option (google.api.http) = {
+      post: "/user/find",
+      body: "*"
+    };
+  }
+}
+
+message FindRequest {
+  string id = 1;
+}
+
+message FindReply {
+  string id = 1;
+  string name = 2;
+}

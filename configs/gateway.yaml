@@ -1,0 +1,13 @@
+discovery:
+  engine: nacos
+  nacos:
+    server:
+      addr: 10.22.200.90
+      port: 8848
+    client:
+      namespace: dev
+      groupId: nacostest
+server:
+  http:
+    addr: :7001
+    timeout: "10s"

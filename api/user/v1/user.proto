@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package user.v1;
+
+option go_package = "nacostest/api/user/v1;v1";
+
+// The greeting service definition.
+service User {
+  // Sends a greeting
+  rpc Find (FindRequest) returns (FindReply);
+}
+
+message FindRequest {
+  string id = 1;
+}
+
+message FindReply {
+  string id = 1;
+  string name = 2;
+}
