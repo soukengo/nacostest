@@ -1,51 +1,31 @@
-# Kratos Project Template
+# 基于kratos框架测试nacos服务发现
 
-## Install Kratos
-```
-go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
-```
-## Create a service
-```
-# Create a template project
-kratos new server
+## 项目结构
+* 项目总共2个服务
+  * gateway: 提供http接口
+  * user: 用户grpc服务
 
-cd server
-# Add a proto template
-kratos proto add api/server/server.proto
-# Generate the proto code
-kratos proto client api/server/server.proto
-# Generate the source code of service by proto file
-kratos proto server api/server/server.proto -t internal/service
+## 依赖关系
+* user服务提供了2个service
+  * User: 用户信息相关接口
+  * Auth: 登录认证相关接口
 
-go generate ./...
-go build -o ./bin/ ./...
-./bin/server -conf ./configs
-```
-## Generate other auxiliary files by Makefile
-```
-# Download and update dependencies
-make init
-# Generate API files (include: pb.go, http, grpc, validate, swagger) by proto file
-make api
-# Generate all files
-make all
-```
-## Automated Initialization (wire)
-```
-# install wire
-go get github.com/google/wire/cmd/wire
+* gateway服务内调用user提供的两个service
+  * 查找用户接口
+  
+  ```shell
+  curl -X POST "http://localhost:7001/user/find" -H "Content-Type: application/json" --data-raw "{
+    \"id\":\"123456\"}"
+  ```
+  * 登录接口
+  
+  ```shell
+  curl -X POST "http://localhost:7001/auth/login" -H "Content-Type: application/json" --data-raw "{
+    \"id\":\"123456\"}"
+  ```
 
-# generate wire
-cd cmd/server
-wire
-```
 
-## Docker
-```bash
-# build
-docker build -t <your-docker-image-name> .
-
-# run
-docker run --rm -p 8000:8000 -p 9000:9000 -v </path/to/your/configs>:/data/conf <your-docker-image-name>
-```
-
+## 遇到的问题
+* 如果先启动gateway，然后再启动user，功能正常
+* 如果交换启动顺序，会导致gateway服务中的 grpc ClientConn watcher卡住
+  * 进而导致上面的两个接口只有其中一个能够成调用
