@@ -29,3 +29,12 @@
 * 如果先启动gateway，然后再启动user，功能正常
 * 如果交换启动顺序，会导致gateway服务中的 grpc ClientConn watcher卡住
   * 进而导致上面的两个接口只有其中一个能够成调用
+
+## 问题分析
+* 先启动user，再启动gateway, gateway服务控制台输出如下（不能正常访问）：
+
+![图片1](images/1.png)
+
+* 先启动gateway，再启动user,gateway服务控制台输出如下（可以正常访问）：
+
+![图片2](images/2.png)
