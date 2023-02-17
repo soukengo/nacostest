@@ -16,6 +16,7 @@ func New(version string) (app *kratos.App, err error) {
 	}
 	version = nacostest.SetVersion(version)
 	cfg.Env.Version = version
+	cfg.Discovery.AppId = cfg.Env.AppId
 	app, err = wireApp(cfg.Env, cfg.Discovery, cfg.Server, log.DefaultLogger)
 	if err != nil {
 		//err = errors.New(errors.UnknownCode, "", "wireApp error")
